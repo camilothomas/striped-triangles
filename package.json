@@ -1,11 +1,12 @@
 {
   "name": "striped-triangles",
   "version": "0.1.0",
+  "homepage": "http://camilothomas.github.io/striped-triangles",
   "private": true,
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.0"
+    "react-scripts": "3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

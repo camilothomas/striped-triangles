@@ -34,7 +34,8 @@ class RectangleCanvas extends React.Component {
     ctx.moveTo(w/2-a/2, 0);
     ctx.lineTo(w/2+a/2, 0);
     let triHeight = a/2*Math.tan(degToRad(60));
-    ctx.lineTo(w/2, triHeight);
+    let adjTriHeight = triHeight*this.props.triHeight;
+    ctx.lineTo(w/2, adjTriHeight);
     ctx.lineTo(w/2-a/2, 0);
     ctx.fill();
   }
@@ -64,12 +65,7 @@ class SizeSelector extends React.Component {
   	this.state = {
   		size: 150,
   		triSize: 100,
-  		s: 'checked',
-  		m: '',
-  		l: '',
-  		triS: 'checked',
-  		triM: '',
-  		triL: '',
+  		triHeight: 1,
   	};
   }
 	
@@ -79,18 +75,24 @@ class SizeSelector extends React.Component {
         this.setState({size: 150});
       } else if(e.target.name === 'tri') {
       	this.setState({triSize: 100});
+      } else if(e.target.name === 'triHeight') {
+      	this.setState({triHeight: 1});
       }
     } else if(e.target.value === 'medium') {
       if(e.target.name === 'rect') { 
         this.setState({size: 250});
       } else if(e.target.name === 'tri') {
       	this.setState({triSize: 200});
+      } else if(e.target.name === 'triHeight') {
+      	this.setState({triHeight: 1.5});
       }
     } else if(e.target.value === 'large') {
 			if(e.target.name === 'rect') { 
         this.setState({size: 350});
       } else if(e.target.name === 'tri') {
       	this.setState({triSize: 300});
+      } else if(e.target.name === 'triHeight') {
+      	this.setState({triHeight: 2});
       }
     }   
 	}
@@ -100,13 +102,13 @@ class SizeSelector extends React.Component {
 		let sizes = ['small', 'medium', 'large'];
 		let smMdLg = ['sm', 'md', 'lg'];
 		for (let a = 0; a < 3; a++) {
-			myArr.push (
-				<span>
+			myArr.push(
+				<span key={'span'+grpName+a}>
 					<RadioBtn
 				    onClick={e => this.handleClick(e)}
 				    name={grpName}
 				    value={sizes[a]}
-				    key={grpName+a}
+				    
 				    dC={(a === 0) ? true : false}
 				  />
 					<span>{smMdLg[a]}</span>
@@ -121,6 +123,7 @@ class SizeSelector extends React.Component {
 			<RectangleCanvas
 				size={this.state.size}
 				triSize={this.state.triSize}
+				triHeight={this.state.triHeight}
 			/>
 		);
 	}
@@ -133,6 +136,9 @@ class SizeSelector extends React.Component {
         <br />
         <span className='ctrlTitle'>Triangle:</span>
         {this.arrayOfRadioBtn('tri')}
+        <br />
+        <span className='ctrlTitle'>Triangle Height:</span>
+        {this.arrayOfRadioBtn('triHeight')}
         <br />
         {this.renderRectangleCanvas()}
       </div>
@@ -148,7 +154,7 @@ class SizeSelector extends React.Component {
 
 
 ReactDOM.render(
-  <div><SizeSelector /></div>,
+  <SizeSelector />,
   document.getElementById('root')
 );
 
